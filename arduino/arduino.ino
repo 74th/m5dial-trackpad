@@ -1,7 +1,7 @@
 #include <M5Dial.h>
 #include "USB.h"
 #include "USBHIDMouse.h"
-#define ENABLE_MOUSE 1
+#define ENABLE_MOUSE 0
 
 #ifdef ENABLE_MOUSE
 USBHIDMouse Mouse;
