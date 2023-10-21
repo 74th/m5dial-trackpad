@@ -1,9 +1,20 @@
 #include <M5Dial.h>
+#include "USB.h"
+#include "USBHIDMouse.h"
+#define ENABLE_MOUSE 1
+
+#ifdef ENABLE_MOUSE
+USBHIDMouse Mouse;
+#endif
 
 void setup()
 {
     auto cfg = M5.config();
     M5Dial.begin(cfg, true, false);
+#ifdef ENABLE_MOUSE
+    Mouse.begin();
+    USB.begin();
+#endif
 }
 
 long oldPosition = -999;
@@ -32,10 +43,18 @@ void loop()
         {
             M5Dial.Display.fillRect(0, 0, 240, 240, BLACK);
         }
+        if (t.state == m5::touch_state_t::touch)
+        {
+            prev_x = t.x;
+            prev_y = t.y;
+        }
     }
     if (prev_x != t.x || prev_y != t.y)
     {
         Serial.println("X:" + String(t.x) + " / " + "Y:" + String(t.y));
+#ifdef ENABLE_MOUSE
+        Mouse.move(t.x - prev_x, t.y - prev_y, 0, 0);
+#endif
         prev_x = t.x;
         prev_y = t.y;
         M5Dial.Display.drawCircle(t.x, t.y, 5, RED);
