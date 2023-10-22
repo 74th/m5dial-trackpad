@@ -1,5 +1,12 @@
 {
   "files.exclude": {
     "build": true
+  },
+  "files.associations": {
+    "*.jinja": "yaml",
+    "*.md": "markdown",
+    "bashrc": "shellscript",
+    "*.service": "plaintext",
+    "*.tcc": "cpp"
   }
 }
